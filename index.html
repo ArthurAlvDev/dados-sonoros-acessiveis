@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="claro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self';">
+  <title>Dados Sonoros — Gráficos Acessíveis, Sonificação e Tabelas Semânticas</title>
+  <meta name="description" content="Estúdio 100% local e gratuito para transformar CSV em gráficos SVG acessíveis, sonificação via Web Audio API e tabelas semânticas sincronizadas.">
+  <meta property="og:title" content="Dados Sonoros — Gráficos Acessíveis e Sonificação">
+  <meta property="og:description" content="Explore séries numéricas por áudio, teclado (setas), resumo estatístico e tabela semântica 100% no navegador.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230E5A8A'/%3E%3Crect x='6' y='18' width='4' height='8' fill='%23FFFFFF'/%3E%3Crect x='14' y='12' width='4' height='14' fill='%23FFFFFF'/%3E%3Crect x='22' y='7' width='4' height='19' fill='%23FFE600'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="src/styles/tokens.css">
+  <link rel="stylesheet" href="src/styles/main.css">
+  <script defer src="src/js/datasets.js"></script>
+  <script defer src="src/js/csv-parser.js"></script>
+  <script defer src="src/js/stats.js"></script>
+  <script defer src="src/js/sonifier.js"></script>
+  <script defer src="src/js/chart-model.js"></script>
+  <script defer src="src/js/storage.js"></script>
+  <script defer src="src/js/exporter.js"></script>
+  <script defer src="src/js/app.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div>
+        <h1>Dados Sonoros</h1>
+        <p class="subtitle">Gráficos SVG acessíveis, sonificação determinística e tabelas semânticas</p>
+      </div>
+
+      <div class="header-controls">
+        <div class="segmented-group" role="group" aria-label="Tema visual">
+          <button type="button" id="btn-theme-default" class="segmented-btn" aria-pressed="true">Tema Claro</button>
+          <button type="button" id="btn-theme-hc" class="segmented-btn" aria-pressed="false">Alto Contraste</button>
+        </div>
+
+        <div class="control-block">
+          <label for="sample-select" class="sr-only">Carregar dataset de exemplo</label>
+          <select id="sample-select" aria-label="Carregar dataset de exemplo">
+            <option value="">Carregar exemplo...</option>
+            <option value="temperatura">Temperatura Média Mensal</option>
+            <option value="acessos">Acessos por Trimestre</option>
+            <option value="orcamento">Orçamento Escolar</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div id="storage-warning" class="banner" role="status" aria-live="polite" hidden></div>
+      <div id="audio-warning" class="banner" role="status" aria-live="polite" hidden></div>
+      <div id="constant-warning" class="banner is-info" role="status" aria-live="polite" hidden></div>
+
+      <section class="card-section" aria-labelledby="section-input-title">
+        <h2 id="section-input-title">1. Entrada de Dados</h2>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label for="chart-title-input">Título do gráfico</label>
+            <input id="chart-title-input" type="text" maxlength="120" placeholder="Ex.: Temperatura Média Mensal">
+          </div>
+
+          <div class="field-group">
+            <label for="csv-file-input">Importar arquivo .csv (máx. 512 KB)</label>
+            <input id="csv-file-input" type="file" accept=".csv,.tsv,.txt,text/csv,text/plain">
+          </div>
+        </div>
+
+        <label for="csv-input">Colar dados CSV ou TSV (delimitadores: vírgula, ponto e vírgula ou tabulação)</label>
+        <textarea id="csv-input" placeholder="Ex.:&#10;Mês,Valor&#10;Jan,24&#10;Fev,26&#10;Mar,29"></textarea>
+
+        <div id="csv-error" class="banner is-error" role="alert" hidden></div>
+
+        <div class="actions-row">
+          <button type="button" id="btn-apply-csv" class="btn-primary">Aplicar CSV</button>
+          <button type="button" id="btn-reset-data" class="btn-control">Limpar / Resetar</button>
+        </div>
+
+        <div class="editable-table-wrap">
+          <h3>Tabela editável rápida</h3>
+          <div id="editable-rows" class="editable-rows"></div>
+          <button type="button" id="btn-add-row" class="btn-control">+ Adicionar linha</button>
+        </div>
+      </section>
+
+      <section id="empty-state" class="card-section empty-state" hidden>
+        <h2>Comece carregando um exemplo ou colando um CSV</h2>
+        <p>Escolha um dos conjuntos de dados em português abaixo para explorar imediatamente:</p>
+        <div id="empty-sample-buttons" class="actions-row" style="justify-content: center;"></div>
+      </section>
+
+      <section class="card-section" aria-labelledby="section-stats-title">
+        <h2 id="section-stats-title">2. Resumo Estatístico Determinístico</h2>
+        <div id="stats-grid" class="stats-grid"></div>
+      </section>
+
+      <section class="card-section" aria-labelledby="section-controls-title">
+        <h2 id="section-controls-title">3. Controles de Gráfico e Sonificação</h2>
+
+        <div class="controls-bar">
+          <div class="control-block">
+            <span class="control-block-title">Tipo de gráfico</span>
+            <div class="segmented-group" role="group" aria-label="Tipo de gráfico">
+              <button type="button" id="btn-chart-bar" class="segmented-btn" aria-pressed="true">Barras</button>
+              <button type="button" id="btn-chart-line" class="segmented-btn" aria-pressed="false">Linhas</button>
+            </div>
+          </div>
+
+          <div class="control-block">
+            <span class="control-block-title">Escala sonora</span>
+            <div class="segmented-group" role="group" aria-label="Escala de frequência">
+              <button type="button" id="btn-scale-linear" class="segmented-btn" aria-pressed="true">Linear</button>
+              <button type="button" id="btn-scale-log" class="segmented-btn" aria-pressed="false">Logarítmica</button>
+            </div>
+          </div>
+
+          <div class="control-block">
+            <label for="playback-rate">Velocidade</label>
+            <select id="playback-rate">
+              <option value="0.75">0.75x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.5">1.5x</option>
+              <option value="2">2x</option>
+            </select>
+          </div>
+
+          <div class="control-block">
+            <label for="volume-range">Volume (<span id="volume-val" class="tabular-nums">70%</span>)</label>
+            <div class="volume-row">
+              <input id="volume-range" type="range" min="0" max="100" step="5" value="70">
+            </div>
+          </div>
+        </div>
+
+        <p id="scale-note" class="subtitle" hidden></p>
+
+        <div class="actions-row">
+          <button type="button" id="btn-play" class="btn-primary">Reproduzir</button>
+          <button type="button" id="btn-pause" class="btn-control">Pausar</button>
+          <button type="button" id="btn-stop" class="btn-control">Parar</button>
+          <button type="button" id="btn-ref-tones" class="btn-control">Tom Mín/Máx</button>
+          <button type="button" id="btn-prev-point" class="btn-control">Ponto Anterior</button>
+          <button type="button" id="btn-next-point" class="btn-control">Próximo Ponto</button>
+        </div>
+      </section>
+
+      <section class="card-section" aria-labelledby="section-chart-title">
+        <h2 id="section-chart-title">4. Gráfico SVG Acessível &amp; Explorador</h2>
+        <p class="chart-instructions">Use as setas Esquerda e Direita, Home ou End para navegar pelos pontos; Enter ou Espaço para ouvir o ponto atual.</p>
+        <div
+          id="chart-explorer"
+          class="chart-explorer"
+          tabindex="0"
+          role="region"
+          aria-label="Explorador interativo do gráfico. Use setas Esquerda e Direita, Home ou End para navegar pelos pontos."
+        ></div>
+        <div id="point-live-region" class="live-status" aria-live="polite" aria-atomic="true">
+          Nenhum ponto selecionado.
+        </div>
+      </section>
+
+      <section class="card-section" aria-labelledby="section-table-title">
+        <h2 id="section-table-title">5. Tabela Semântica Sincronizada</h2>
+        <div class="table-scroll" tabindex="0" aria-label="Tabela de dados rolável">
+          <table class="data-table">
+            <caption id="table-caption">Dados da série</caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Rótulo</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Variação</th>
+              </tr>
+            </thead>
+            <tbody id="data-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card-section" aria-labelledby="section-export-title">
+        <h2 id="section-export-title">6. Exportação Local</h2>
+        <div class="actions-row">
+          <button type="button" id="btn-export-html" class="btn-primary">Exportar HTML+SVG Acessível</button>
+          <button type="button" id="btn-export-json" class="btn-control">Exportar JSON</button>
+          <button type="button" id="btn-export-csv" class="btn-control">Exportar CSV</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>100% local no navegador • Zero telemetria • Zero servidor/IA paga.</p>
+      <p>Implementa boas práticas estruturais alinhadas à WCAG 2.2 AA; validação com leitores de tela reais recomendada em QA.</p>
+    </footer>
+  </div>
+</body>
+</html>

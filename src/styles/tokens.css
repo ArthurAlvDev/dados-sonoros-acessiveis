@@ -1,0 +1,110 @@
+:root,
+[data-theme="default"],
+[data-theme="claro"] {
+  --bg-page: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-muted: #EDF2F7;
+  --bg-active-row: #E2EFF8;
+
+  --text-primary: #0F172A;
+  --text-secondary: #334155;
+  --text-muted: #475569;
+
+  --accent: #0E5A8A;
+  --accent-hover: #0A4368;
+  --accent-contrast: #FFFFFF;
+  --focus-ring: #00449E;
+
+  --border-subtle: #CBD5E1;
+  --border-strong: #64748B;
+
+  --chart-series-1: #0E5A8A;
+  --chart-series-2: #9A3412;
+  --chart-active: #B45309;
+  --chart-grid: #CBD5E1;
+  --chart-axis: #334155;
+
+  --status-ok-bg: #ECFDF5;
+  --status-ok-text: #065F46;
+  --status-ok-border: #059669;
+
+  --status-warn-bg: #FFFBEB;
+  --status-warn-text: #78350F;
+  --status-warn-border: #D97706;
+
+  --status-error-bg: #FEF2F2;
+  --status-error-text: #991B1B;
+  --status-error-border: #DC2626;
+}
+
+[data-theme="alto-contraste"],
+[data-theme="high-contrast"] {
+  --bg-page: #000000;
+  --bg-surface: #0A0A0A;
+  --bg-muted: #1A1A1A;
+  --bg-active-row: #002B49;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #F1F5F9;
+  --text-muted: #E2E8F0;
+
+  --accent: #FFE600;
+  --accent-hover: #FFF04D;
+  --accent-contrast: #000000;
+  --focus-ring: #FFE600;
+
+  --border-subtle: #94A3B8;
+  --border-strong: #FFFFFF;
+
+  --chart-series-1: #66D9FF;
+  --chart-series-2: #FF99CC;
+  --chart-active: #FFE600;
+  --chart-grid: #94A3B8;
+  --chart-axis: #FFFFFF;
+
+  --status-ok-bg: #002611;
+  --status-ok-text: #80FFB3;
+  --status-ok-border: #80FFB3;
+
+  --status-warn-bg: #2B1F00;
+  --status-warn-text: #FFE600;
+  --status-warn-border: #FFE600;
+
+  --status-error-bg: #330000;
+  --status-error-text: #FF9999;
+  --status-error-border: #FF9999;
+}
+
+:root {
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Liberation Sans", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "Segoe UI Mono", "Liberation Mono", monospace;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .btn-primary,
+  .btn-control,
+  .segmented-btn,
+  .data-table tbody tr {
+    transition: background-color 140ms ease, border-color 140ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
