@@ -68,7 +68,10 @@ test('JS files and HTML contain zero unsafe HTML/eval sinks and zero external ru
       );
     }
 
-    const withoutSvgXmlns = content.replace(/http:\/\/www\.w3\.org\/2000\/svg/g, '');
+    // O xmlns do SVG e o crédito da marca são as únicas URLs externas permitidas.
+    const withoutSvgXmlns = content
+      .replace(/http:\/\/www\.w3\.org\/2000\/svg/g, '')
+      .replace(/https:\/\/olacdev\.com\//g, '');
     assert.equal(
       /https?:\/\//i.test(withoutSvgXmlns),
       false,
