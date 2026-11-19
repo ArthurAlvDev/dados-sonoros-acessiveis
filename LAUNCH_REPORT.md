@@ -2,7 +2,7 @@
 
 - **Data:** 2026-11-17
 - **Projeto:** `dados-sonoros-acessiveis` — **Dados Sonoros** (Estúdio e Explorador Web No-Code de Gráficos Acessíveis, Sonificação de Dados e Tabelas Semânticas)
-- **Status de Publicação:** **Repositório privado criado no GitHub; aguardando importação/deploy na Vercel pelo usuário em `https://vercel.com/new`.**
+- **Status de Publicação:** **Publicado em produção na Vercel** (repositório privado no GitHub, HTTP 200 OK).
 
 ---
 
@@ -40,8 +40,8 @@
 - **Segurança (`SECURITY_AUDIT.md`):** **APPROVED** — **0 achados** críticos/altos/médios; **1 achado baixo** (`LOW-01`: CSV formula injection em `escapeCsvField` ao reexportar rótulos iniciados por `=`, `+`, `-`, `@`) e **2 informativos** (`INFO-01` headers HTTP complementares à CSP meta tag, `INFO-02` checagem de prefixo no script local `serve`).
 
 ## 6. Repositório, Publicação, Custos e Monetização
-- **Repositório GitHub:** https://github.com/ArthurAlvDev/dados-sonoros-acessiveis (privado, branch `main`)
-- **URL Vercel:** Pendente de importação manual pelo usuário em `https://vercel.com/new` (Vercel CLI deslogada e ferramentas de criação/deploy do Vercel MCP não expostas nesta sessão)
+- **Repositório GitHub:** https://github.com/ArthurAlvDev/dados-sonoros-acessiveis (privado, branch `main`, commit `2ad2cf8`)
+- **URL Vercel:** https://dados-sonoros-acessiveis.vercel.app (`prj_u4ILASWiOheosqM5UiTNtMcLdsSH`, `dpl_FoJeTeFJ9wLwH2jn2MTEdd4VvT4F`, `READY`, HTTP 200 OK; `Post Deployment Monitor` acionado)
 - **Custos:** **R$ 0,00 / US$ 0,00**.
 
 ## 7. Limitações
