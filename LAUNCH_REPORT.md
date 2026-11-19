@@ -1,8 +1,8 @@
 # LAUNCH_REPORT — Dados Sonoros (`dados-sonoros-acessiveis`)
 
-- **Data:** 2026-11-17
+- **Data:** 2026-11-17 (atualizado em 2026-11-19)
 - **Projeto:** `dados-sonoros-acessiveis` — **Dados Sonoros** (Estúdio e Explorador Web No-Code de Gráficos Acessíveis, Sonificação de Dados e Tabelas Semânticas)
-- **Status de Publicação:** **Publicado em produção na Vercel** (repositório privado no GitHub, HTTP 200 OK).
+- **Status de Publicação:** **Publicado em produção na Vercel** (`https://dados-sonoros-acessiveis.vercel.app`, HTTP 200) com repositório **público** no GitHub, licença MIT, `vercel.json` com cabeçalhos de segurança e marca “Made by OlacDev”. Domínio `dados.olacdev.com` adicionado, aguardando CNAME no Cloudflare.
 
 ---
 
