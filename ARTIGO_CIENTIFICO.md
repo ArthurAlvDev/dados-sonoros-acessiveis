@@ -2,6 +2,15 @@
 
 **Dados Sonoros: A No-Code Web Studio and Explorer for Accessible Charts, Deterministic Sonification, and Semantic Tables**
 
+**Arthur Alves Ferreira (Ferreira, A. A.)**
+OlacDev · <https://olacdev.com/>
+
+**Versão:** 1.0 · **Data:** 19/11/2026
+**Licença do texto:** CC BY 4.0 · **Licença do software:** MIT
+**Tipo de recurso (Zenodo):** Preprint · **Idioma:** Português (Brasil)
+
+*Pré-print interno. Ainda não depositado em repositório de dados; ao publicar, substituir esta nota pelo DOI. A versão citável do software é o repositório público indicado nas referências.*
+
 ---
 
 ## Resumo
@@ -136,3 +145,10 @@ Como trabalhos futuros prioritários, destacam-se: (i) execução de testes sist
 5. **Data Navigator.** *Accessible data visualization navigation library*. Disponível em: https://github.com/cmudig/data-navigator
 6. **Highcharts.** *Highcharts Accessibility Module*. Disponível em: https://www.highcharts.com/docs/accessibility/accessibility-module
 7. **MDN Web Docs.** *Web Audio API (`AudioContext`, `OscillatorNode`, `GainNode`)*. Mozilla Foundation. Disponível em: https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API
+8. **FERREIRA, A. A.** *Dados Sonoros: estúdio e explorador web no-code para gráficos acessíveis, sonificação determinística e tabelas semânticas*. 2026. Software. Disponível em: https://github.com/ArthurAlvDev/dados-sonoros-acessiveis
+
+---
+
+### Nota sobre publicação
+
+Este texto é um pré-print interno. **Não houve submissão a periódico nem depósito em repositório de dados nesta etapa.** A versão citável do software é o repositório público indicado acima, sob licença MIT; o texto segue sob CC BY 4.0. Ao depositar, substituir a nota do cabeçalho pelo DOI atribuído.
